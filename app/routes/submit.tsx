@@ -1,13 +1,17 @@
 import { useActionData } from "@remix-run/react";
 import { json, ActionFunctionArgs } from "@remix-run/node";
-import invariant from "tiny-invariant";
+// import invariant from "tiny-invariant";
 
 export const action = async ({ params, request }: ActionFunctionArgs) => {
-  invariant(params.topic, "Missing topic param");
+  // invariant(params.topic, "Missing topic param");
 
   const formData = await request.formData();
+  const topic = formData.get("topic")?.toString();
+  if (!topic) {
+    throw new Response("Not Found", { status: 404 });
+  }
 
-  const poem = await getPoem(formData.get("topic"));
+  const poem = await getPoem(topic);
   if (!poem) {
     throw new Response("Not Found", { status: 404 });
   }
