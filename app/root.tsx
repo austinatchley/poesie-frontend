@@ -12,6 +12,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link
+          rel="stylesheet"
+          href="https://unpkg.com/sakura.css/css/sakura.css"
+          type="text/css"
+        />
+
         <Meta />
         <Links />
       </head>
