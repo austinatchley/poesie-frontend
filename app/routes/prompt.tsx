@@ -29,7 +29,6 @@ async function getPoemResponse(topic: string): Promise<any> {
   const url = new URL(`http://localhost:8080/generate/text?topic=${encodedTopic}`);
 
   const response = await fetch(url);
-  console.log(response);
   const responseJson = await response.json();
   console.log(responseJson);
 
@@ -39,7 +38,7 @@ async function getPoemResponse(topic: string): Promise<any> {
 export default function PromptPage() {
   const actionData = useActionData<typeof action>();
   if (actionData && "error" in actionData) {
-    throw new Error();
+    throw new Error(actionData.error);
   }
 
   const generatedTitle = actionData?.title;
@@ -48,17 +47,22 @@ export default function PromptPage() {
 
 
   return (
-    <div className="prompt-page">
-      <h1>poesie</h1>
-
-      <img src="sakura.jpg" alt="A sakura tree" />
+    <div className="prompt-page-container">
+      <header className="nav-bar-container">
+        <div className="title-bar">
+          <div className="logo-container">
+            <img src="sakura.jpg" alt="A sakura tree" className="sakura" />
+          </div>
+          <div className="title">
+            <h1>poesie</h1>
+          </div>
+        </div>
+      </header>
 
       <div className="prompt-container">
-        <div className="poem">
-          {actionData ?
-            <GeneratedPoem title={generatedTitle} haiku={generatedHaiku} prose={generatedProse} /> :
-            <p>Enter a topic to generate a poem</p>}
-        </div>
+        {actionData ?
+          <GeneratedPoem title={generatedTitle} haiku={generatedHaiku} prose={generatedProse} /> :
+          <p>Enter a topic to generate a poem</p>}
 
         <Form className="prompt-form" action="/prompt" method="POST">
           <input

@@ -6,11 +6,16 @@ interface GeneratedPoemProps {
 }
 
 export default function GeneratedPoem({ title, haiku, prose }: GeneratedPoemProps) {
-    return (<div>
-        <h2>{title}</h2>
+    return (<div className="generated-poem-container">
+        <div className="poem-title"><h2>{title}</h2></div>
         <br></br>
-        <p>{haiku}</p>
+        <pre className="poem-text">
+            <code>
+                <div className="haiku"><p>{haiku}</p></div>
+            </code>
+        </pre>
+
         <br></br>
-        <p>{prose}</p>
-        </div>);
+        <div className="prose"><p>{prose}</p></div>
+    </div>);
 }
