@@ -8,7 +8,7 @@ export const action = async ({ params, request }: ActionFunctionArgs) => {
   if (!topic) {
     console.error(`Could not get topic from formData=${formData}`);
     return json({
-      poem: `Failed to generate a poem on ${topic}. Please try again`,
+      poem: `Failed to generate a poem on the topic of "${topic}". Please try again`,
     });
   }
 
@@ -16,7 +16,7 @@ export const action = async ({ params, request }: ActionFunctionArgs) => {
   if (!poem) {
     console.error(`Could not get poem for topic=${topic}`);
     return json({
-      poem: `Failed to generate a poem on ${topic}. Please try again`,
+      poem: `Failed to generate a poem on the topic of "${topic}". Please try again`,
     });
   }
 
