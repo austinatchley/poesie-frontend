@@ -73,6 +73,8 @@ export default function PromptPage() {
             aria-label="Topic"
             placeholder="Type a topic for your generated poem..."
           />
+
+          <button type="submit" className="prompt-button">Submit</button>
         </Form>
       </div>
     </div>

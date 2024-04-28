@@ -10,9 +10,7 @@ export default function GeneratedPoem({ title, haiku, prose }: GeneratedPoemProp
         <div className="poem-title"><h2>{title}</h2></div>
         <br></br>
         <pre className="poem-text">
-            <code>
-                <div className="haiku"><p>{haiku}</p></div>
-            </code>
+            <code><div className="haiku">{haiku}</div></code>
         </pre>
 
         <br></br>
