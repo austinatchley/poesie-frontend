@@ -9,9 +9,13 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
+    <div>
       <h1>poesie</h1>
       <ul>
+        <li>
+          <a href="/prompt">Generate a poem</a>
+        </li>
+        <br></br>
         <li>
           <a
             target="_blank"
@@ -19,15 +23,6 @@ export default function Index() {
             rel="noreferrer"
           >
             15m Quickstart Blog Tutorial
-          </a>
-        </li>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/jokes"
-            rel="noreferrer"
-          >
-            Deep Dive Jokes App Tutorial
           </a>
         </li>
         <li>

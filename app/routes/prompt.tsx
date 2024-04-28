@@ -3,21 +3,30 @@ import { json, ActionFunctionArgs } from "@remix-run/node";
 
 export const action = async ({ params, request }: ActionFunctionArgs) => {
   const formData = await request.formData();
+
   const topic = formData.get("topic")?.toString();
   if (!topic) {
-    throw new Response("Not Found", { status: 404 });
+    console.error(`Could not get topic from formData=${formData}`);
+    return json({ poem: "Poem failed to generate. Please try again" });
   }
 
   const poem = await getPoem(topic);
   if (!poem) {
-    throw new Response("Not Found", { status: 404 });
+    console.error(`Could not get poem for topic=${topic}`);
+    return json({ poem: "Poem failed to generate. Please try again" });
   }
 
   return json({ poem: poem });
 };
 
-function getPoem(topic: string): string {
-  return `poem for topic: ${topic}`; // TODO: Integrate with backend API
+async function getPoem(topic: string): Promise<string> {
+  const encodedTopic = encodeURIComponent(topic); // Sanitizes and encodes the user input to be included as a URL param
+  const url = new URL(`http://localhost:8080/generate?topic=${encodedTopic}`);
+
+  const response = await fetch(url);
+  const responseJson = await response.json();
+
+  return responseJson["poem"] ?? null;
 }
 
 export default function PromptPage() {
@@ -25,23 +34,24 @@ export default function PromptPage() {
   const poem = actionData?.poem;
 
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
+    <div className="prompt-page">
       <h1>poesie</h1>
 
-      <div>
-        {poem ? (
-          <div>{poem}</div>
-        ) : (
-          <div>Enter a topic to generate a poem for</div>
-        )}
+      <img src="sakura.jpg" alt="A sakura tree" />
 
-        <Form action="/prompt" method="POST">
+      <div className="prompt-container">
+        <div className="poem">
+          {poem ? <p>{poem}</p> : <p>Enter a topic to generate a poem</p>}
+        </div>
+
+        <Form className="prompt-form" action="/prompt" method="POST">
           <input
+            className="prompt-input"
             name="topic"
             type="text"
-            defaultValue="sakura grove"
+            defaultValue=""
             aria-label="Topic"
-            placeholder="sakura grove"
+            placeholder="Type a topic for your generated poem..."
           />
         </Form>
       </div>
